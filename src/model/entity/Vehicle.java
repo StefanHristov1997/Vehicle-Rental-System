@@ -1,12 +1,8 @@
 package model.entity;
 
-import model.enums.VehicleType;
-
 public class Vehicle {
 
     private Long id;
-
-    private VehicleType type;
 
     private String brand;
 
@@ -14,9 +10,8 @@ public class Vehicle {
 
     private double value;
 
-    public Vehicle(Long id, VehicleType type, String model, String brand, double value) {
+    public Vehicle(Long id, String model, String brand, double value) {
         this.id = id;
-        this.type = type;
         this.model = model;
         this.brand = brand;
         this.value = value;
@@ -28,14 +23,6 @@ public class Vehicle {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public VehicleType getType() {
-        return type;
-    }
-
-    public void setType(VehicleType type) {
-        this.type = type;
     }
 
     public String getBrand() {
