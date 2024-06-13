@@ -8,11 +8,11 @@ public class Invoice {
 
     private LocalDate invoiceDate;
 
-    private Long customerId;
+    private Customer customer;
 
-    private Long rentId;
+    private Rent rent;
 
-    private Long vehicleId;
+    private Vehicle vehicle;
 
     private double rentalAmount;
 
@@ -20,12 +20,12 @@ public class Invoice {
 
     private double totalAmount;
 
-    public Invoice(LocalDate invoiceDate, Long id, Long rentId, Long customerId, Long vehicleId, double rentalAmount, double insuranceAmount, double totalAmount) {
-        this.invoiceDate = invoiceDate;
+    public Invoice(Long id, LocalDate invoiceDate, Customer customer, Vehicle vehicle, Rent rent, double rentalAmount, double insuranceAmount, double totalAmount) {
         this.id = id;
-        this.rentId = rentId;
-        this.customerId = customerId;
-        this.vehicleId = vehicleId;
+        this.invoiceDate = invoiceDate;
+        this.customer = customer;
+        this.vehicle = vehicle;
+        this.rent = rent;
         this.rentalAmount = rentalAmount;
         this.insuranceAmount = insuranceAmount;
         this.totalAmount = totalAmount;
@@ -47,28 +47,28 @@ public class Invoice {
         this.invoiceDate = invoiceDate;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    private void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    private void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public Long getRentId() {
-        return rentId;
+    public Rent getRent() {
+        return rent;
     }
 
-    private void setRentId(Long rentId) {
-        this.rentId = rentId;
+    private void setRent(Rent rent) {
+        this.rent = rent;
     }
 
-    public Long getVehicleId() {
-        return vehicleId;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    private void setVehicleId(Long vehicleId) {
-        this.vehicleId = vehicleId;
+    private void setVehicleId(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public double getRentalAmount() {
