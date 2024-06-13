@@ -1,8 +1,13 @@
 package model.entity;
 
+import service.RentService;
+import service.impl.RentServiceImpl;
+
 import java.time.LocalDate;
 
 public class Rent {
+
+    private Long id;
 
     private Customer customer;
 
@@ -18,8 +23,11 @@ public class Rent {
 
     private int actualRentalPeriod;
 
+    private final RentService rentService;
+
     public Rent(Customer customer, Vehicle vehicle, LocalDate rentDate, LocalDate returnDate, LocalDate actualReturnDate, int rentalPeriod, int actualRentalPeriod) {
         this.customer = customer;
+        this.rentService = new RentServiceImpl();
         this.setVehicle(vehicle);
         this.rentDate = rentDate;
         this.returnDate = returnDate;
@@ -38,15 +46,15 @@ public class Rent {
 
         switch (vehicle.getType()) {
             case CAR:
-                rentPrice = calculatedRentPrice(vehicle, 20, 15, rentalPeriod, actualRentalPeriod);
+                rentPrice = rentService.calculatedRentPrice(vehicle, 20, 15, rentalPeriod, actualRentalPeriod);
                 vehicle.setPrice(rentPrice);
                 break;
             case MOTORCYCLE:
-                rentPrice = calculatedRentPrice(vehicle, 15, 10, rentalPeriod, actualRentalPeriod);
+                rentPrice = rentService.calculatedRentPrice(vehicle, 15, 10, rentalPeriod, actualRentalPeriod);
                 vehicle.setPrice(rentPrice);
                 break;
             case CARGO_VAN:
-                 rentPrice = calculatedRentPrice(vehicle, 50, 40, rentalPeriod, actualRentalPeriod);
+                rentPrice = rentService.calculatedRentPrice(vehicle, 50, 40, rentalPeriod, actualRentalPeriod);
                 break;
         }
 
@@ -101,20 +109,4 @@ public class Rent {
         this.actualRentalPeriod = actualRentalPeriod;
     }
 
-    private static double calculatedRentPrice(Vehicle vehicle, double priceForWeek, double priceForMoreThanAWeek, int rentalPeriod, int actualRentalPeriod) {
-        double priceForRent;
-
-        if (rentalPeriod < 7) {
-            priceForRent = priceForWeek;
-        } else {
-            priceForRent = priceForMoreThanAWeek;
-        }
-
-        if (rentalPeriod != actualRentalPeriod) {
-            final int remainingDays = rentalPeriod - actualRentalPeriod;
-            priceForRent = (vehicle.getPrice() * actualRentalPeriod) + ((vehicle.getPrice() * 0.5) * remainingDays);
-        }
-
-        return priceForRent;
-    }
 }
