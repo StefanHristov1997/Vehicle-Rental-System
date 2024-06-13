@@ -1,19 +1,20 @@
 package model.entity;
 
+import model.enums.VehicleType;
+
 public class Car extends Vehicle {
 
     private int safetyRating;
 
-    public Car(Long id, String model, String brand, double value, int safetyRating) {
-        super(id, model, brand, value);
-        this.safetyRating = safetyRating;
+    public Car(Long id, VehicleType type, String model, String brand, double value, double price) {
+        super(id, type, model, brand, value, price);
     }
 
     public int getSafetyRating() {
         return safetyRating;
     }
 
-    public void setSafetyRating(int safetyRating) {
+    private void setSafetyRating(int safetyRating) {
         this.safetyRating = safetyRating;
     }
 }

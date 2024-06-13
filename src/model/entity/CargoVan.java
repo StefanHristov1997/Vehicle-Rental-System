@@ -1,19 +1,21 @@
 package model.entity;
 
+import model.enums.VehicleType;
+
 public class CargoVan extends Vehicle {
 
     private int driverExperience;
 
-    public CargoVan(Long id, String model, String brand, double value, int driverExperience) {
-        super(id, model, brand, value);
-        this.driverExperience = driverExperience;
+    public CargoVan(Long id, VehicleType type, String model, String brand, double value, double price) {
+        super(id, type, model, brand, value, price);
     }
+
 
     public int getDriverExperience() {
         return driverExperience;
     }
 
-    public void setDriverExperience(int driverExperience) {
+    private void setDriverExperience(int driverExperience) {
         this.driverExperience = driverExperience;
     }
 }
