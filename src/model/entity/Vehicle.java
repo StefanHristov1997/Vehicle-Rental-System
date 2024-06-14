@@ -14,15 +14,18 @@ public class Vehicle {
 
     private double value;
 
-    private double pricePerDay;
+    private double rentalPricePerDay;
 
-    public Vehicle(Long id, VehicleType type, String model, String brand, double value, double pricePerDay) {
+    private double insurancePricePerDay;
+
+    public Vehicle(Long id, VehicleType type, String model, String brand, double value, double rentalPricePerDay, double insurancePricePerDay) {
         this.id = id;
         this.type = type;
         this.model = model;
         this.brand = brand;
         this.value = value;
-        this.pricePerDay = pricePerDay;
+        this.rentalPricePerDay = rentalPricePerDay;
+        this.insurancePricePerDay = insurancePricePerDay;
     }
 
     public Long getId() {
@@ -65,11 +68,19 @@ public class Vehicle {
         this.type = type;
     }
 
-    public double getPricePerDay() {
-        return pricePerDay;
+    public double getRentalPricePerDay() {
+        return rentalPricePerDay;
     }
 
-    protected void setPricePerDay(double pricePerDay) {
-        this.pricePerDay = pricePerDay;
+    protected void setRentalPricePerDay(double rentalPricePerDay) {
+        this.rentalPricePerDay = rentalPricePerDay;
+    }
+
+    public double getInsurancePricePerDay() {
+        return insurancePricePerDay;
+    }
+
+    protected void setInsurancePricePerDay(double insurancePricePerDay) {
+        this.insurancePricePerDay = insurancePricePerDay;
     }
 }
