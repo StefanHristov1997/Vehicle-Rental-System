@@ -14,25 +14,28 @@ public class RentCalculatorImpl implements RentCalculator {
 
         switch (vehicle.getType()) {
             case CAR, MOTORCYCLE -> {
+                double rentalPricePerDayWithDiscount = vehicle.getRentalPricePerDay() - 5;
                 if ((rent.getRentalPeriod() < 7) && (rent.getRentalPeriod() == rent.getActualRentalPeriod())) {
                     rentCost = rent.getRentalPeriod() * vehicle.getRentalPricePerDay();
                 } else if ((rent.getRentalPeriod() > 7) && (rent.getRentalPeriod() == rent.getActualRentalPeriod())) {
-                    rentCost = rent.getRentalPeriod() * (vehicle.getRentalPricePerDay() - 5);
+                    rentCost = rent.getRentalPeriod() * rentalPricePerDayWithDiscount;
                 } else if (((rent.getRentalPeriod() < 7) && (rent.getRentalPeriod() != rent.getActualRentalPeriod()))) {
                     rentCost = (rent.getActualRentalPeriod() * vehicle.getRentalPricePerDay()) + (remainingDays * (vehicle.getRentalPricePerDay() * 0.5));
                 } else if ((rent.getRentalPeriod() > 7) && (rent.getRentalPeriod() != rent.getActualRentalPeriod())) {
-                    rentCost = (rent.getActualRentalPeriod() * (vehicle.getRentalPricePerDay() - 5)) + (remainingDays * (vehicle.getRentalPricePerDay() * 0.5));
+                    rentCost = (rent.getActualRentalPeriod() * rentalPricePerDayWithDiscount) + (remainingDays * (rentalPricePerDayWithDiscount * 0.5));
                 }
             }
             case CARGO_VAN -> {
+                double rentalPricePerDayWithDiscount = vehicle.getRentalPricePerDay() - 10;
                 if ((rent.getRentalPeriod() < 7) && (rent.getRentalPeriod() == rent.getActualRentalPeriod())) {
                     rentCost = rent.getRentalPeriod() * vehicle.getRentalPricePerDay();
                 } else if ((rent.getRentalPeriod() > 7) && (rent.getRentalPeriod() == rent.getActualRentalPeriod())) {
-                    rentCost = rent.getRentalPeriod() * (vehicle.getRentalPricePerDay() - 10);
+                    rentCost = rent.getRentalPeriod() * rentalPricePerDayWithDiscount;
                 } else if (((rent.getRentalPeriod() < 7) && (rent.getRentalPeriod() != rent.getActualRentalPeriod()))) {
-                    rentCost = (rent.getActualRentalPeriod() * vehicle.getRentalPricePerDay()) + (remainingDays * (vehicle.getRentalPricePerDay() * 0.5));
+                    rentCost = (rent.getActualRentalPeriod() * vehicle.getRentalPricePerDay()) + (remainingDays * (rentalPricePerDayWithDiscount * 0.5));
                 } else if ((rent.getRentalPeriod() > 7) && (rent.getRentalPeriod() != rent.getActualRentalPeriod())) {
-                    rentCost = (rent.getActualRentalPeriod() * (vehicle.getRentalPricePerDay() - 10)) + (remainingDays * (vehicle.getRentalPricePerDay() * 0.5));
+                    rentCost = (rent.getActualRentalPeriod() * rentalPricePerDayWithDiscount) + (remainingDays * (rentalPricePerDayWithDiscount * 0.5));
+
                 }
             }
         }

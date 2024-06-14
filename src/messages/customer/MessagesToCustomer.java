@@ -14,7 +14,7 @@ public enum MessagesToCustomer {
     public final static String SELECT_CARGO_VAN = "We can offer you the following car brands and models: %s %s, %s %s\n";
 
     public final static String RENT_PERIOD = "How many days will you rent the car for?";
-    public final static String ACTUAL_RENT_PERIOD = "Hello, do you need to reduce the rental period? Y/N";
+    public final static String ACTUAL_RENT_PERIOD = "Hello, do you need to reduce the rental period? YES/NO";
     public final static String REDUCE_RENT_PERIOD = "With how many days you expected to reduce rental period?";
 
 }

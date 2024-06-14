@@ -14,7 +14,7 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
 
-        final Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
         final RentCalculator rentCalculator = new RentCalculatorImpl();
 
@@ -70,16 +70,15 @@ public class App {
         LocalDate rentDate = LocalDate.now();
         LocalDate returnDate = rentDate.plusDays(rentPeriod);
 
-        System.out.print(MessagesToCustomer.ACTUAL_RENT_PERIOD);
-
-        String answer = sc.nextLine().toUpperCase();
+        System.out.println(MessagesToCustomer.ACTUAL_RENT_PERIOD);
+        String answer = sc.next();
 
         Rent rent = null;
 
-        if (answer.equalsIgnoreCase("Y")) {
+        if (answer.equals("YES")) {
             System.out.println(MessagesToCustomer.REDUCE_RENT_PERIOD);
             int actualRentalPeriod = rentPeriod - sc.nextInt();
-            LocalDate actualReturnDate = returnDate.minusDays(actualRentalPeriod);
+            LocalDate actualReturnDate = returnDate.minusDays(rentPeriod - actualRentalPeriod);
             rent = new Rent
                     (customer,
                             vehicle, rentDate, returnDate, actualReturnDate, rentPeriod, actualRentalPeriod);
