@@ -4,18 +4,9 @@ import model.enums.VehicleType;
 
 public class CargoVan extends Vehicle {
 
-    private int driverExperience;
+    private final static double PRICE_PER_DAY = 50;
 
-    public CargoVan(Long id, VehicleType type, String model, String brand, double value, double price) {
-        super(id, type, model, brand, value, price);
-    }
-
-
-    public int getDriverExperience() {
-        return driverExperience;
-    }
-
-    private void setDriverExperience(int driverExperience) {
-        this.driverExperience = driverExperience;
+    public CargoVan(Long id, VehicleType type, String model, String brand, double value, double pricePerDay) {
+        super(id, type, model, brand, value, PRICE_PER_DAY);
     }
 }

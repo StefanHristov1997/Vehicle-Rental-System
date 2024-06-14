@@ -14,15 +14,15 @@ public class Vehicle {
 
     private double value;
 
-    private double price;
+    private double pricePerDay;
 
-    public Vehicle(Long id, VehicleType type, String model, String brand, double value, double price) {
+    public Vehicle(Long id, VehicleType type, String model, String brand, double value, double pricePerDay) {
         this.id = id;
         this.type = type;
         this.model = model;
         this.brand = brand;
         this.value = value;
-        this.price = price;
+        this.pricePerDay = pricePerDay;
     }
 
     public Long getId() {
@@ -57,19 +57,19 @@ public class Vehicle {
         this.model = model;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    protected void setPrice(double price) {
-        this.price = price;
-    }
-
     public VehicleType getType() {
         return type;
     }
 
     protected void setType(VehicleType type) {
         this.type = type;
+    }
+
+    public double getPricePerDay() {
+        return pricePerDay;
+    }
+
+    protected void setPricePerDay(double pricePerDay) {
+        this.pricePerDay = pricePerDay;
     }
 }

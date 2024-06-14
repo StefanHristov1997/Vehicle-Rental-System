@@ -1,8 +1,5 @@
 package model.entity;
 
-import service.RentService;
-import service.impl.RentServiceImpl;
-
 import java.time.LocalDate;
 
 public class Rent {
@@ -23,12 +20,9 @@ public class Rent {
 
     private int actualRentalPeriod;
 
-    private final RentService rentService;
-
     public Rent(Customer customer, Vehicle vehicle, LocalDate rentDate, LocalDate returnDate, LocalDate actualReturnDate, int rentalPeriod, int actualRentalPeriod) {
         this.customer = customer;
-        this.rentService = new RentServiceImpl();
-        this.setVehicle(vehicle);
+        this.vehicle = vehicle;
         this.rentDate = rentDate;
         this.returnDate = returnDate;
         this.actualReturnDate = actualReturnDate;
@@ -41,23 +35,6 @@ public class Rent {
     }
 
     private void setVehicle(Vehicle vehicle) {
-
-        double rentPrice;
-
-        switch (vehicle.getType()) {
-            case CAR:
-                rentPrice = rentService.calculatedRentPrice(vehicle, 20, 15, rentalPeriod, actualRentalPeriod);
-                vehicle.setPrice(rentPrice);
-                break;
-            case MOTORCYCLE:
-                rentPrice = rentService.calculatedRentPrice(vehicle, 15, 10, rentalPeriod, actualRentalPeriod);
-                vehicle.setPrice(rentPrice);
-                break;
-            case CARGO_VAN:
-                rentPrice = rentService.calculatedRentPrice(vehicle, 50, 40, rentalPeriod, actualRentalPeriod);
-                break;
-        }
-
         this.vehicle = vehicle;
     }
 

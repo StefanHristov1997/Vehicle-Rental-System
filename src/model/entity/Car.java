@@ -6,8 +6,10 @@ public class Car extends Vehicle {
 
     private int safetyRating;
 
-    public Car(Long id, VehicleType type, String model, String brand, double value, double price) {
-        super(id, type, model, brand, value, price);
+    private final static double PRICE_PER_DAY = 20;
+
+    public Car(Long id, VehicleType type, String model, String brand, double value, double pricePerDay) {
+        super(id, type, model, brand, value, PRICE_PER_DAY);
     }
 
     public int getSafetyRating() {
