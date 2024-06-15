@@ -3,7 +3,9 @@ A simple functiional vehicle rental system that manages to rental and return pro
 
 # My Briefly Solution
 
-1. <b>First of all, I started with building the objects of the system, with the main one being Vehicle, which is inherited by the specified types of vehicles. Each vehicle is characterized by its brand, model, value, daily rental price, daily rental price with a discount, daily insurance price and daily insurance price with a discount.
+<b> 
+1. First of all, I started with building the objects of the system, with the main one being Vehicle, which is inherited by the specified types of vehicles. Each vehicle is characterized by its brand, model, value, 
+    daily rental price, daily rental price with a discount, daily insurance price and daily insurance price with a discount.
    
 2. The second step was to add specific types of vehicles, to which I added characteristics unique to each type of vehicle, such as the safety rating for cars and their specific rental and insurance prices per day.
   
@@ -17,4 +19,5 @@ A simple functiional vehicle rental system that manages to rental and return pro
    final invoice.
 
 5. I made the application easier to maintain and better structured in the final stage by adding several additional utility classes such as PrintUtil, ValidatorUtil, CustomerUtil, RentUtil, and InvoiceUtil.
-   PrintUtil assists with printing messages to the client, ValidatorUtil is for validating client input data, and the remaining three help with initializing specific objects.</b>
+   PrintUtil assists with printing messages to the client, ValidatorUtil is for validating client input data, and the remaining three help with initializing specific objects.
+</b>
