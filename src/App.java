@@ -5,7 +5,9 @@ import messages.offers.CargoVanOffers;
 import messages.offers.MotorcycleOffers;
 import model.entity.*;
 import model.enums.VehicleType;
+import utils.InsuranceCalculator;
 import utils.RentCalculator;
+import utils.impl.InsuranceCalculatorImpl;
 import utils.impl.RentCalculatorImpl;
 
 import java.time.LocalDate;
@@ -14,9 +16,10 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        final Scanner sc = new Scanner(System.in);
 
         final RentCalculator rentCalculator = new RentCalculatorImpl();
+        final InsuranceCalculator insuranceCalculator = new InsuranceCalculatorImpl();
 
         System.out.println(MessagesToCustomer.HELLO_CUSTOMER);
         System.out.println(MessagesToCustomer.WELCOME_TO_OUR_SYSTEM);
@@ -89,9 +92,16 @@ public class App {
         }
 
 
-        double rentCost = rentCalculator.calculateRent(vehicle, rent);
+        final double rentCost = rentCalculator.calculateRent(vehicle, rent);
 
-        System.out.println(rentCost);
+        switch (vehicleType) {
+            case "CAR" -> {
+                final Insurance insurance = new Insurance(1L, customer, vehicle);
+                final double insuranceCost = insuranceCalculator.calculateCarInsurance(vehicle, rent)
+
+            }
+        }
+
     }
 
     private static Vehicle createCargoVehicle(String chosenMotorCycle) {
