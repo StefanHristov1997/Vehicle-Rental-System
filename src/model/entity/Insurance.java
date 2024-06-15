@@ -8,13 +8,10 @@ public class Insurance {
 
     private Vehicle vehicle;
 
-    private double insuranceAmount;
-
-    public Insurance(Long id, Customer customer, Vehicle vehicle, double insuranceAmount) {
+    public Insurance(Long id, Customer customer, Vehicle vehicle) {
         this.id = id;
         this.customer = customer;
         this.vehicle = vehicle;
-        this.insuranceAmount = insuranceAmount;
     }
 
     public Long getId() {
@@ -41,11 +38,4 @@ public class Insurance {
         this.vehicle = vehicle;
     }
 
-    public double getInsuranceAmount() {
-        return insuranceAmount;
-    }
-
-    public void setInsuranceAmount(double insuranceAmount) {
-        this.insuranceAmount = insuranceAmount;
-    }
 }

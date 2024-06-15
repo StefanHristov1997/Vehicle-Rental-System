@@ -1,13 +1,12 @@
 package utils.impl;
 
-import model.entity.Insurance;
-import model.entity.Rent;
+import model.entity.Invoice;
 import utils.InvoiceCalculator;
 
 public class InvoiceCalculatorImpl implements InvoiceCalculator {
 
     @Override
-    public double calculateInvoice(Rent rent, Insurance insurance) {
-        return rent.getRentalAmount() + insurance.getInsuranceAmount();
+    public double calculateInvoice(Invoice invoice) {
+        return invoice.getRentalAmount() + invoice.getInsuranceAmount();
     }
 }

@@ -1,18 +1,14 @@
 import messages.customer.MessagesToCustomer;
-import messages.exception.ExceptionMessages;
 import messages.offers.CarOffers;
 import messages.offers.CargoVanOffers;
 import messages.offers.MotorcycleOffers;
 import model.entity.*;
 import model.enums.VehicleType;
-import utils.InsuranceCalculator;
-import utils.InvoiceCalculator;
-import utils.RentCalculator;
-import utils.impl.InsuranceCalculatorImpl;
-import utils.impl.InvoiceCalculatorImpl;
-import utils.impl.RentCalculatorImpl;
+import utils.*;
+import utils.impl.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
@@ -23,200 +19,92 @@ public class App {
         final RentCalculator rentCalculator = new RentCalculatorImpl();
         final InsuranceCalculator insuranceCalculator = new InsuranceCalculatorImpl();
         final InvoiceCalculator invoiceCalculator = new InvoiceCalculatorImpl();
+        final PrintUtil printUtil = new PrintUtilImpl();
+        final ValidatorUtil validator = new ValidatorUtilImpl();
+        final CustomerUtil customerUtil = new CustomerUtilImpl();
+        final VehicleUtil vehicleUtil = new VehicleUtilImpl();
+        final InvoiceUtil invoiceUtil = new InvoiceUtilImpl();
+        final RentUtil rentUtil = new RentUtilImpl();
 
-        System.out.println(MessagesToCustomer.HELLO_CUSTOMER);
-        System.out.println(MessagesToCustomer.WELCOME_TO_OUR_SYSTEM);
-        System.out.println(MessagesToCustomer.SELECT_VEHICLE_TYPE);
+        printUtil.sendToCustomer(
+                List.of(MessagesToCustomer.HELLO_CUSTOMER,
+                        MessagesToCustomer.WELCOME_TO_OUR_SYSTEM,
+                        MessagesToCustomer.SELECT_VEHICLE_TYPE));
 
-        String vehicleType = validateVehicleType(
+        String vehicleType = validator.validateVehicleType(
                 VehicleType.CAR.toString(),
                 VehicleType.MOTORCYCLE.toString(),
                 VehicleType.CARGO_VAN.toString(), sc);
 
-        Customer customer = createCustomer(vehicleType, sc);
+        Customer customer = customerUtil.createCustomer(vehicleType, sc);
 
         Vehicle vehicle = null;
 
         switch (vehicleType) {
             case "CAR" -> {
-                printCarOffers();
+                printUtil.sendToCustomer(
+                        List.of(String.format(MessagesToCustomer.SELECT_VEHICLE,
+                                VehicleType.CAR,
+                                CarOffers.PORSCHE,
+                                CarOffers.MODEL_SS,
+                                CarOffers.FIAT,
+                                CarOffers.PUNTO)));
 
-                String chosenCar = validateVehicle(
-                        CarOffers.FORD,
+                String chosenCar = validator.validateVehicle(
+                        CarOffers.PORSCHE,
                         CarOffers.FIAT,
                         sc);
 
-                vehicle = createCarVehicle(chosenCar);
+                vehicle = vehicleUtil.createCarVehicle(chosenCar);
             }
             case "MOTORCYCLE" -> {
-                printMotorcycleOffers();
+                printUtil.sendToCustomer(
+                        List.of(String.format(MessagesToCustomer.SELECT_VEHICLE,
+                                VehicleType.MOTORCYCLE,
+                                MotorcycleOffers.Aprilia,
+                                MotorcycleOffers.TUAREG,
+                                MotorcycleOffers.KAWASAKI,
+                                MotorcycleOffers.Z_650_RS)));
 
-                String chosenMotorCycle = validateVehicle(
+                String chosenMotorCycle = validator.validateVehicle(
                         MotorcycleOffers.Aprilia,
                         MotorcycleOffers.KAWASAKI,
                         sc);
 
-                vehicle = createMotorcycleVehicle(chosenMotorCycle);
+                vehicle = vehicleUtil.createCarVehicle(chosenMotorCycle);
             }
             case "CARGO_VAN" -> {
-                printCargoVanOffers();
+                printUtil.sendToCustomer(
+                        List.of(String.format(MessagesToCustomer.SELECT_VEHICLE,
+                                VehicleType.CARGO_VAN,
+                                CargoVanOffers.FORD,
+                                CargoVanOffers.TRANSIT,
+                                CargoVanOffers.RAM,
+                                CargoVanOffers.ProMaster)));
 
-                String chosenCargoVan = validateVehicle(
+                String chosenCargoVan = validator.validateVehicle(
                         CargoVanOffers.FORD,
                         CargoVanOffers.RAM,
                         sc);
 
-                vehicle = createCargoVehicle(chosenCargoVan);
+                vehicle = vehicleUtil.createCarVehicle(chosenCargoVan);
             }
         }
 
-        System.out.println(MessagesToCustomer.RENT_PERIOD);
+        printUtil.sendToCustomer(List.of(MessagesToCustomer.RENT_PERIOD));
         int rentPeriod = sc.nextInt();
 
         LocalDate rentDate = LocalDate.now();
         LocalDate returnDate = rentDate.plusDays(rentPeriod);
 
-        System.out.println(MessagesToCustomer.ACTUAL_RENT_PERIOD);
-        String answer = sc.next();
+        printUtil.sendToCustomer(List.of(MessagesToCustomer.ACTUAL_RENT_PERIOD));
 
-        Rent rent = null;
+        Rent rent = rentUtil.createRent(sc, printUtil, rentPeriod, returnDate, customer, vehicle, rentDate);
 
-        if (answer.equals("YES")) {
-            System.out.println(MessagesToCustomer.REDUCE_RENT_PERIOD);
-            int actualRentalPeriod = rentPeriod - sc.nextInt();
-            LocalDate actualReturnDate = returnDate.minusDays(rentPeriod - actualRentalPeriod);
-            rent = new Rent
-                    (customer,
-                            vehicle, rentDate, returnDate, actualReturnDate, rentPeriod, actualRentalPeriod);
-        } else {
-            rent = new Rent
-                    (customer,
-                            vehicle, rentDate, returnDate, returnDate, rentPeriod, rentPeriod);
-        }
+        Insurance insurance = new Insurance(1L, customer, vehicle);
 
+        Invoice invoice = invoiceUtil.createInvoice(invoiceCalculator, rentCalculator, insuranceCalculator, vehicle, rent, customer);
 
-        final double rentCost = rentCalculator.calculateRent(vehicle, rent);
-        rent.setRentalAmount(rentCost);
-
-
-        final double insuranceCost = insuranceCalculator.calculateInsurance(vehicle, rent, customer);
-        Insurance insurance = new Insurance(1L, customer, vehicle, insuranceCost);
-
-        final double incomeInvoice = invoiceCalculator.calculateInvoice(rent, insurance);
-        Invoice invoice = new Invoice(1L, rent.getActualReturnDate(), customer,
-                vehicle, rent, rent.getRentalAmount(), insurance.getInsuranceAmount(),incomeInvoice);
-
-        System.out.println(MessagesToCustomer.INVOICE);
-
-        System.out.println(invoice);
-
-    }
-
-    private static Vehicle createCargoVehicle(String chosenMotorCycle) {
-        Vehicle vehicle;
-
-        if (chosenMotorCycle.equals(CargoVanOffers.FORD)) {
-            vehicle = new CargoVan(1L, VehicleType.CARGO_VAN,
-                    CargoVanOffers.FORD, CargoVanOffers.TRANSIT, CargoVanOffers.FORD_TRANSIT_VALUE);
-        } else {
-            vehicle = new CargoVan(1L, VehicleType.CARGO_VAN,
-                    CargoVanOffers.RAM, CargoVanOffers.ProMaster, CargoVanOffers.RAM_PROMASTER_VALUE);
-        }
-        return vehicle;
-    }
-
-    private static void printCargoVanOffers() {
-        System.out.printf(MessagesToCustomer.SELECT_CARGO_VAN,
-                CargoVanOffers.FORD,
-                CargoVanOffers.TRANSIT,
-                CargoVanOffers.RAM,
-                CargoVanOffers.ProMaster);
-    }
-
-    private static Vehicle createMotorcycleVehicle(String chosenMotorCycle) {
-        Vehicle vehicle;
-        if (chosenMotorCycle.equals(MotorcycleOffers.Aprilia)) {
-            vehicle = new Motorcycle(1L, VehicleType.MOTORCYCLE,
-                    MotorcycleOffers.Aprilia, MotorcycleOffers.TUAREG, MotorcycleOffers.APRILIA_TUAREG_VALUE);
-        } else {
-            vehicle = new Motorcycle(1L, VehicleType.MOTORCYCLE,
-                    MotorcycleOffers.KAWASAKI, MotorcycleOffers.Z_650_RS, MotorcycleOffers.KAWASAKI_Z_650_RS_VALUE);
-        }
-        return vehicle;
-    }
-
-    private static void printMotorcycleOffers() {
-        System.out.printf(MessagesToCustomer.SELECT_MOTORCYCLE,
-                MotorcycleOffers.Aprilia,
-                MotorcycleOffers.TUAREG,
-                MotorcycleOffers.KAWASAKI,
-                MotorcycleOffers.Z_650_RS);
-    }
-
-    private static Vehicle createCarVehicle(String chosenCar) {
-
-        Vehicle vehicle;
-
-        if (chosenCar.equals(CarOffers.FORD)) {
-            vehicle = new Car(1L, VehicleType.CAR, CarOffers.FORD, CarOffers.MUSTANG, CarOffers.FORD_MUSTANG_VALUE, CarOffers.FORD_SAFETY_RATING);
-        } else {
-            vehicle = new Car(1L, VehicleType.CAR, CarOffers.FIAT, CarOffers.PUNTO, CarOffers.FIAT_PUNTO_VALUE, CarOffers.FIAT_SAFETY_RATING);
-        }
-
-        return vehicle;
-    }
-
-    private static void printCarOffers() {
-        System.out.printf(
-                MessagesToCustomer.SELECT_CAR,
-                CarOffers.FORD,
-                CarOffers.MUSTANG,
-                CarOffers.FIAT,
-                CarOffers.PUNTO);
-    }
-
-    private static Customer createCustomer(String vehicleType, Scanner sc) {
-        Customer customer = null;
-        switch (vehicleType) {
-            case "CAR" -> {
-                System.out.println(MessagesToCustomer.GREETING_FOR_CHOICE_CAR);
-                final String firstName = sc.nextLine();
-                final String lastName = sc.nextLine();
-                customer = new Customer(1L, firstName, lastName);
-            }
-            case "MOTORCYCLE", "CARGO_VAN" -> {
-                System.out.println(MessagesToCustomer.GREETING_FOR_CHOICE_MOTOR_CARGO);
-                final String firstName = sc.nextLine();
-                final String lastName = sc.nextLine();
-                final int age = sc.nextInt();
-                final int drivenExperience = sc.nextInt();
-                customer = new Customer(1L, firstName, lastName, age, drivenExperience);
-            }
-        }
-        return customer;
-    }
-
-    private static String validateVehicleType(String car, String motorcycle, String cargoVan, Scanner sc) {
-
-        String vehicleType = sc.nextLine().toUpperCase();
-
-        while (!vehicleType.equals(car) && !vehicleType.equals(motorcycle) && !vehicleType.equals(cargoVan)) {
-            System.out.println(ExceptionMessages.INVALID_VEHICLE_TYPE);
-            vehicleType = sc.nextLine().toUpperCase();
-        }
-        return vehicleType;
-    }
-
-
-    private static String validateVehicle(String firstBrand, String secondBrand, Scanner sc) {
-
-        String customerChoice = sc.nextLine().toUpperCase();
-
-        while ((!customerChoice.equals(firstBrand)) && (!customerChoice.equals(secondBrand))) {
-            System.out.println(ExceptionMessages.INVALID_VEHICLE);
-            customerChoice = sc.nextLine().toUpperCase();
-        }
-
-        return customerChoice;
+        printUtil.sendToCustomer(List.of(MessagesToCustomer.INVOICE, invoice.toString()));
     }
 }

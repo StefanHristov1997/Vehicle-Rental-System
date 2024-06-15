@@ -1,9 +1,8 @@
 package utils;
 
-import model.entity.Insurance;
-import model.entity.Rent;
+import model.entity.Invoice;
 
 public interface InvoiceCalculator {
 
-    double calculateInvoice(Rent rent, Insurance insurance);
+    double calculateInvoice(Invoice invoice);
 }

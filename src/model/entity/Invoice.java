@@ -22,7 +22,7 @@ public class Invoice {
 
     private double totalAmount;
 
-    public Invoice(Long id, LocalDate invoiceDate, Customer customer, Vehicle vehicle, Rent rent, double rentalAmount, double insuranceAmount, double totalAmount) {
+    public Invoice(Long id, LocalDate invoiceDate, Customer customer, Vehicle vehicle, Rent rent, double rentalAmount, double insuranceAmount) {
         this.id = id;
         this.invoiceDate = invoiceDate;
         this.customer = customer;
@@ -30,7 +30,6 @@ public class Invoice {
         this.rent = rent;
         this.rentalAmount = rentalAmount;
         this.insuranceAmount = insuranceAmount;
-        this.totalAmount = totalAmount;
     }
 
     public Long getId() {
@@ -93,7 +92,7 @@ public class Invoice {
         return totalAmount;
     }
 
-    private void setTotalAmount(double totalAmount) {
+    public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
