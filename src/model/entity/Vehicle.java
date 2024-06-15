@@ -94,7 +94,7 @@ public class Vehicle {
         return rentalPriceWithDiscount;
     }
 
-    public void setRentalPriceWithDiscount(double rentalPriceWithDiscount) {
+    protected void setRentalPriceWithDiscount(double rentalPriceWithDiscount) {
         this.rentalPriceWithDiscount = rentalPriceWithDiscount;
     }
 
@@ -106,7 +106,7 @@ public class Vehicle {
         return insurancePriceWithDiscount;
     }
 
-    public void setInsurancePriceWithDiscount(double insurancePriceWithDiscount) {
+    protected void setInsurancePriceWithDiscount(double insurancePriceWithDiscount) {
         this.insurancePriceWithDiscount = insurancePriceWithDiscount;
     }
 }

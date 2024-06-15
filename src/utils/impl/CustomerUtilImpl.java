@@ -11,6 +11,7 @@ public class CustomerUtilImpl implements CustomerUtil {
     public Customer createCustomer(String vehicleType, Scanner sc) {
 
         Customer customer = null;
+
         switch (vehicleType) {
             case "CAR" -> {
                 System.out.println(MessagesToCustomer.GREETING_FOR_CHOICE_CAR);
