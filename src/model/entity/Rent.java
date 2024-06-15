@@ -20,6 +20,8 @@ public class Rent {
 
     private int actualRentalPeriod;
 
+    private  double rentalAmount;
+
     public Rent(Customer customer, Vehicle vehicle, LocalDate rentDate, LocalDate returnDate, LocalDate actualReturnDate, int rentalPeriod, int actualRentalPeriod) {
         this.customer = customer;
         this.vehicle = vehicle;
@@ -86,4 +88,11 @@ public class Rent {
         this.actualRentalPeriod = actualRentalPeriod;
     }
 
+    public double getRentalAmount() {
+        return rentalAmount;
+    }
+
+    public void setRentalAmount(double rentalAmount) {
+        this.rentalAmount = rentalAmount;
+    }
 }

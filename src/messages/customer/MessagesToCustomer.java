@@ -4,6 +4,7 @@ public enum MessagesToCustomer {
     ;
     public final static String HELLO_CUSTOMER = "Hello Customer!";
     public final static String WELCOME_TO_OUR_SYSTEM = "Welcome to our vehicle rental system!";
+    public final static String INVOICE = "Your invoice is:";
 
     public final static String GREETING_FOR_CHOICE_CAR = "Great choice! We need your first ant last name for your vehicle!";
     public final static String GREETING_FOR_CHOICE_MOTOR_CARGO = "Great choice! We need your first name,last name, your age and driven experience for your vehicle!";

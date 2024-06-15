@@ -6,8 +6,10 @@ import messages.offers.MotorcycleOffers;
 import model.entity.*;
 import model.enums.VehicleType;
 import utils.InsuranceCalculator;
+import utils.InvoiceCalculator;
 import utils.RentCalculator;
 import utils.impl.InsuranceCalculatorImpl;
+import utils.impl.InvoiceCalculatorImpl;
 import utils.impl.RentCalculatorImpl;
 
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class App {
 
         final RentCalculator rentCalculator = new RentCalculatorImpl();
         final InsuranceCalculator insuranceCalculator = new InsuranceCalculatorImpl();
+        final InvoiceCalculator invoiceCalculator = new InvoiceCalculatorImpl();
 
         System.out.println(MessagesToCustomer.HELLO_CUSTOMER);
         System.out.println(MessagesToCustomer.WELCOME_TO_OUR_SYSTEM);
@@ -93,14 +96,19 @@ public class App {
 
 
         final double rentCost = rentCalculator.calculateRent(vehicle, rent);
+        rent.setRentalAmount(rentCost);
 
-        switch (vehicleType) {
-            case "CAR" -> {
-                final Insurance insurance = new Insurance(1L, customer, vehicle);
-                final double insuranceCost = insuranceCalculator.calculateCarInsurance(vehicle, rent)
 
-            }
-        }
+        final double insuranceCost = insuranceCalculator.calculateInsurance(vehicle, rent, customer);
+        Insurance insurance = new Insurance(1L, customer, vehicle, insuranceCost);
+
+        final double incomeInvoice = invoiceCalculator.calculateInvoice(rent, insurance);
+        Invoice invoice = new Invoice(1L, rent.getActualReturnDate(), customer,
+                vehicle, rent, rent.getRentalAmount(), insurance.getInsuranceAmount(),incomeInvoice);
+
+        System.out.println(MessagesToCustomer.INVOICE);
+
+        System.out.println(invoice);
 
     }
 
