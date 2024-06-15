@@ -3,7 +3,7 @@ A simple functiional vehicle rental system that manages to rental and return pro
 
 # My Briefly Solution
 
-<b> 
+<b> <br>
 1. First of all, I started with building the objects of the system, with the main one being Vehicle, which is inherited by the specified types of vehicles. Each vehicle is characterized by its brand, model, value, 
     daily rental price, daily rental price with a discount, daily insurance price and daily insurance price with a discount.
    
