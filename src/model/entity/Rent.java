@@ -1,6 +1,5 @@
 package model.entity;
 
-import java.time.Instant;
 import java.time.LocalDate;
 
 public class Rent {

@@ -6,7 +6,7 @@ import utils.InsuranceCalculator;
 public class InsuranceCalculatorImpl implements InsuranceCalculator {
 
     @Override
-    public double calculateCarInsurance(Car car, Rent rent, Customer customer) {
+    public double calculateCarInsurance(Car car, Rent rent) {
 
         double insuranceCost = 0;
 
